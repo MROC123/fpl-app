@@ -1,0 +1,56 @@
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between list items */
+  padding: 20px;
+  list-style-type: none; /* Remove default list styling */
+  margin: 0;
+}
+
+/* Individual player list item (card-like design) */
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+li:hover {
+  background-color: #e6e6e6; /* Light hover effect */
+}
+
+/* Player name style */
+li span.player-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Team name style */
+li span.team-name {
+  color: #777;
+}
+
+/* Player stats (cost, points, goals) */
+li span.player-stats {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  gap: 15px;
+}
+
+/* Formatting for player cost, points, and goals */
+li span.player-stats span {
+  color: #4caf50; /* Green for cost */
+  font-weight: 600;
+}
+
+li span.player-stats span.goals {
+  color: #ff9800; /* Orange for goals */
+}
