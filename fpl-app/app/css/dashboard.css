@@ -1,56 +1,97 @@
-ul {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between list items */
+/* .dashboard {
   padding: 20px;
-  list-style-type: none; /* Remove default list styling */
-  margin: 0;
 }
 
-/* Individual player list item (card-like design) */
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: "Arial", sans-serif;
+.scrollable-container {
+  overflow-x: auto;
+}
+
+.headings,
+.player-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
   font-size: 14px;
-  color: #333;
-  transition: background-color 0.3s ease;
+  min-width: 2400px;
 }
 
-li:hover {
-  background-color: #e6e6e6; /* Light hover effect */
-}
-
-/* Player name style */
-li span.player-name {
+.headings {
   font-weight: bold;
-  font-size: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ddd;
 }
 
-/* Team name style */
-li span.team-name {
-  color: #777;
+.player-row {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
-/* Player stats (cost, points, goals) */
-li span.player-stats {
+.player-row:hover {
+  background-color: #f0f0f0;
+}
+
+.player-summary {
+  display: contents;
+}
+
+.player-details {
+  grid-column: span 16;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+}
+
+.player-details p {
+  margin: 0;
   font-size: 14px;
-  color: #555;
-  display: flex;
-  gap: 15px;
+} */
+
+.dashboard {
+  padding: 10px;
 }
 
-/* Formatting for player cost, points, and goals */
-li span.player-stats span {
-  color: #4caf50; /* Green for cost */
-  font-weight: 600;
+.scroll-container {
+  overflow-x: auto;
 }
 
-li span.player-stats span.goals {
-  color: #ff9800; /* Orange for goals */
+.headings,
+.player-row {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(40px, 1fr));
+  font-size: 14px;
+  min-width: 2400px;
+}
+
+.headings {
+  font-weight: bold;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #ddd;
+}
+
+.player-row {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.player-row:hover {
+  background-color: #f0f0f0;
+}
+
+.player-summary {
+  display: contents;
+}
+
+.player-details {
+  grid-column: span 16; /* Matches the number of columns in grid-template-columns */
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
 }

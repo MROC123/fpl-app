@@ -12,8 +12,14 @@ export async function GET() {
     const teams = data.teams;
     return new Response(JSON.stringify({ players, teams }), { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify({ message: error.message }), {
-      status: 500,
-    });
+    if (error instanceof Error) {
+      return new Response(JSON.stringify({ message: error.message }), {
+        status: 500,
+      });
+    } else {
+      return new Response(JSON.stringify({ message: "Unknown error" }), {
+        status: 500,
+      });
+    }
   }
 }

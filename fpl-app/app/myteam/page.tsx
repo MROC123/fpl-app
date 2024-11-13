@@ -4,14 +4,51 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Player } from "@/redux/features/playersSlice";
+// import { Player } from "@/redux/features/playersSlice";
 import { setPlayers } from "@/redux/features/playersSlice";
 import "../css/dashboard.css";
 
-export default function Listing() {
+interface Player {
+  id: number;
+  first_name: string;
+  second_name: string;
+  team: number;
+  now_cost: number;
+  total_points: number;
+  goals_scored: number;
+  minutes: number;
+  assists: number;
+  bonus: number;
+  clean_sheets: number;
+  goals_conceded: number;
+  own_goals: number;
+  penalties_saved: number;
+  penalties_missed: number;
+  yellow_cards: number;
+  red_cards: number;
+  saves: number;
+  bps: number;
+  news: string;
+  selected_by_percent: string;
+  influence: string;
+  creativity: string;
+  threat: string;
+  ict_index: string;
+  starts: number;
+  expected_goals: string;
+  expected_assists: string;
+  expected_goal_involvements: string;
+  expected_goals_conceded: string;
+  penalties_order: number | null;
+  clean_sheets_per_90: number;
+  form: string;
+}
+
+export default function MyTeam() {
   const { players } = useSelector((state: RootState) => state.players);
   const { teams } = useSelector((state: RootState) => state.teams);
   const dispatch = useDispatch();
+  const [createTeam, setCreateTeam] = useState<Player[]>([]);
 
   const [expandedPlayerId, setExpandedPlayerId] = useState<number | null>(null);
 
@@ -24,17 +61,26 @@ export default function Listing() {
     setExpandedPlayerId((prevId) => (prevId === playerId ? null : playerId));
   };
 
-  const findHighestPointsTotal = () => {
-    const sortedPlayers = [...players].sort(
-      (a, b) => a.total_points + b.total_points
-    );
-    dispatch(setPlayers(sortedPlayers));
-  };
-
   const findHighest = (field: string) => {
     const sortedPlayers = [...players].sort((a, b) => b[field] - a[field]);
     dispatch(setPlayers(sortedPlayers));
   };
+
+  const addToTeam = (player: Player) => {
+    if (createTeam.includes(player)) {
+      return null;
+    } else {
+      setCreateTeam((prevTeam) => [...prevTeam, player]);
+    }
+  };
+
+  const removeFromTeam = (playerID: number) => {
+    setCreateTeam((prevTeam) =>
+      prevTeam.filter((player) => playerID !== player.id)
+    );
+  };
+
+  console.log(createTeam);
 
   return (
     <div className="dashboard">
@@ -103,7 +149,17 @@ export default function Listing() {
                   <p>
                     Details about {player.first_name} {player.second_name}
                   </p>
-                  {/* You can add more detailed stats or info here */}
+                  <div>
+                    {createTeam.includes(player) ? (
+                      <button onClick={() => removeFromTeam(player.id)}>
+                        Remove
+                      </button>
+                    ) : (
+                      <button onClick={() => addToTeam(player)}>
+                        Add to Team
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
