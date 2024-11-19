@@ -11,6 +11,7 @@ export interface Player {
   minutes: number;
   assists: number;
   bonus: number;
+  element_type: number;
   clean_sheets: number;
   goals_conceded: number;
   own_goals: number;
@@ -34,6 +35,7 @@ export interface Player {
   penalties_order: number | null;
   clean_sheets_per_90: number;
   form: string;
+  web_name: string;
 }
 
 interface PlayersState {
