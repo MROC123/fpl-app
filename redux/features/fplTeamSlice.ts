@@ -21,7 +21,7 @@ export interface FPLTeam {
   forward3: Player | null;
 }
 
-const initialState: FPLTeam = {
+export const initialState: FPLTeam = {
   id: 1,
   goalkeeper1: null,
   goalkeeper2: null,
@@ -40,24 +40,16 @@ const initialState: FPLTeam = {
   forward3: null,
 };
 
-const loadTeamFromLocalStorage = (): FPLTeam => {
-  if (typeof window !== "undefined") {
-    const team = localStorage.getItem("fplteam");
-    if (team) {
-      return team ? JSON.parse(team) : { ...initialState };
-    } else {
-      const defaultTeam = { ...initialState };
-      localStorage.setItem("fplteam", JSON.stringify(defaultTeam));
-      return defaultTeam;
-    }
-  }
-  return { ...initialState };
-};
+// const loadTeamFromLocalStorage = (): FPLTeam => {
+//   const team = localStorage.getItem("fplteam");
+//   if (team) {
+//     return JSON.parse(team);
+//   }
+//   return { ...initialState };
+// };
 
 const saveTeamToLocalStorage = (team: FPLTeam) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("fplteam", JSON.stringify(team));
-  }
+  localStorage.setItem("fplteam", JSON.stringify(team));
 };
 
 const getPositionKey = (element_type: number): (keyof FPLTeam)[] => {
@@ -83,8 +75,15 @@ const getPositionKey = (element_type: number): (keyof FPLTeam)[] => {
 
 const fplTeamSlice = createSlice({
   name: "fplTeam",
-  initialState: loadTeamFromLocalStorage(),
+  initialState,
   reducers: {
+    setTeamFromLocalStorage: (state, action: PayloadAction<FPLTeam>) => {
+      return action.payload;
+    },
+    clearTeam: (state) => {
+      localStorage.removeItem("fplteam");
+      return { ...initialState };
+    },
     addPlayerToTeam: (state, action: PayloadAction<Player>) => {
       const player = action.payload;
       const positionKeys = getPositionKey(player.element_type);
@@ -113,5 +112,10 @@ const fplTeamSlice = createSlice({
   },
 });
 
-export const { addPlayerToTeam, removePlayerFromTeam } = fplTeamSlice.actions;
+export const {
+  addPlayerToTeam,
+  removePlayerFromTeam,
+  setTeamFromLocalStorage,
+  clearTeam,
+} = fplTeamSlice.actions;
 export default fplTeamSlice.reducer;

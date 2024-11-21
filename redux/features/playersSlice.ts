@@ -36,6 +36,7 @@ export interface Player {
   clean_sheets_per_90: number;
   form: string;
   web_name: string;
+  points_per_game: string;
 }
 
 interface PlayersState {
