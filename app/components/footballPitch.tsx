@@ -1,10 +1,33 @@
+"use client";
+
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Player } from "@/redux/features/playersSlice";
 import { RootState } from "../../redux/store";
+import { UseDispatch } from "react-redux";
+import {
+  addPlayerToTeam,
+  removePlayerFromTeam,
+  setTeamFromLocalStorage,
+  clearTeam,
+} from "@/redux/features/fplTeamSlice";
+import Link from "next/link";
 
 const FootballPitch = () => {
   const fplTeam = useSelector((state: RootState) => state.fplTeam);
+  const dispatch = useDispatch();
+
+  const removePlayerFromFPLTeam = (player: Player) => {
+    dispatch(removePlayerFromTeam(player));
+  };
+
+  if (!fplTeam) {
+    return <div>Loading your team...</div>;
+  }
+
+  const handleclearTeam = () => {
+    dispatch(clearTeam());
+  };
 
   return (
     <div>
