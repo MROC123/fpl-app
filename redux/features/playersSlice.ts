@@ -37,6 +37,7 @@ export interface Player {
   form: string;
   web_name: string;
   points_per_game: string;
+  status: string;
 }
 
 interface PlayersState {
