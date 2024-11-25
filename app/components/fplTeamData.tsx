@@ -20,7 +20,7 @@ export default function FplDataBoard() {
         }
         return acc;
       }, 0);
-    return total / 10;
+    return total;
   };
 
   const handleClearTeam = () => {

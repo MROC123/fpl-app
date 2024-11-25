@@ -53,7 +53,12 @@ const playersSlice = createSlice({
   initialState,
   reducers: {
     setPlayers(state, action: PayloadAction<Player[]>) {
-      state.players = action.payload;
+      state.players = action.payload
+        .filter((player) => player.status !== "u")
+        .map((player) => ({
+          ...player,
+          now_cost: player.now_cost / 10,
+        }));
     },
   },
 });

@@ -17,10 +17,9 @@ export const columns = [
 ];
 
 export const availableFields = [
-  { value: "second_name", label: "Name" },
-  { value: "team", label: "Team" },
-  { value: "now_cost", label: "Cost" },
+  // { value: "team", label: "Team" },
   { value: "total_points", label: "Total Points" },
+  { value: "now_cost", label: "Cost" },
   { value: "goals_scored", label: "Goals Scored" },
   { value: "assists", label: "Assists" },
   { value: "minutes", label: "Minutes" },
@@ -32,4 +31,6 @@ export const availableFields = [
   { value: "expected_assists", label: "Expected Assists" },
   { value: "expected_goal_involvements", label: "Expected Goal Involvements" },
   { value: "expected_goals_conceded", label: "Expected Goals Conceded" },
+  { value: "points_per_game", label: "Points Per Game" },
+  { value: "selected_by_percent", label: "Selected by Percent" },
 ];

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 // import { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { RootState } from "../../redux/store";
@@ -17,6 +17,8 @@ export default function MyTeam() {
   // const { teams } = useSelector((state: RootState) => state.teams);
   // const dispatch = useDispatch();
   // const fplTeam = useSelector((state: RootState) => state.fplTeam);
+
+  const [toggleOn, setToggleOn] = useState(false);
 
   // const [expandedPlayerId, setExpandedPlayerId] = useState<number | null>(null);
 
@@ -47,11 +49,18 @@ export default function MyTeam() {
   // //   );
   // // };
 
+  const toggleGraph = () => {
+    setToggleOn((prev) => !prev);
+  };
+
   return (
     <div>
       <FplDataBoard></FplDataBoard>
       <FootballPitch></FootballPitch>
-      <FplDataGraph />
+      <button onClick={toggleGraph}>
+        {toggleOn ? "Hide Graph" : "Show Graph"}
+      </button>
+      {toggleOn && <FplDataGraph />}
       <MainDashboard />
     </div>
   );
