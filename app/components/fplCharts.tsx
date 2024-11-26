@@ -159,6 +159,8 @@ const FplDataGraph = () => {
     };
   };
 
+  console.log(fplTeam);
+
   // const yAxisData = filteredPlayers.map((player) => player[xAxisField]);
   // const xAxisData = filteredPlayers.map((player) => player[yAxisField]);
 

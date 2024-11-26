@@ -32,5 +32,13 @@ export const availableFields = [
   { value: "expected_goal_involvements", label: "Expected Goal Involvements" },
   { value: "expected_goals_conceded", label: "Expected Goals Conceded" },
   { value: "points_per_game", label: "Points Per Game" },
+  { value: "expected_assists_per_90", label: "Expected Assists per 90" },
+  { value: "expected_goals_per_90", label: "Expected Goals per 90" },
+  {
+    value: "expected_goal_involvements_per_90",
+    label: "Expected Goals Involvements per 90",
+  },
   { value: "selected_by_percent", label: "Selected by Percent" },
+  { value: "form", label: "Form" },
+  { value: "clean_sheets_per_90", label: "Clean Sheet per 90" },
 ];
