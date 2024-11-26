@@ -188,7 +188,7 @@ export default function MainDashboard() {
                   {player.first_name} {player.second_name}
                 </span>
                 <span>{teamName(player)}</span>
-                <span>{player.now_cost / 10}M</span>
+                <span>{player.now_cost}m</span>
                 <span>{player.total_points}</span>
                 <span>{player.goals_scored}</span>
                 <span>{player.assists}</span>
