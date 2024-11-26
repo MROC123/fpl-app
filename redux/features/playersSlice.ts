@@ -38,6 +38,7 @@ export interface Player {
   web_name: string;
   points_per_game: string;
   status: string;
+  goals_and_assists: number;
 }
 
 interface PlayersState {
@@ -58,6 +59,7 @@ const playersSlice = createSlice({
         .map((player) => ({
           ...player,
           now_cost: player.now_cost / 10,
+          goals_and_assists: player.assists + player.goals_scored,
         }));
     },
   },
