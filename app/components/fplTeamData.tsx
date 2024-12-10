@@ -8,7 +8,6 @@ import { clearTeam } from "@/redux/features/fplTeamSlice";
 
 export default function FplDataBoard() {
   const fplTeam = useSelector((state: RootState) => state.fplTeam);
-  const [totalTeamCost, setTotalTeamCost] = useState(0);
   const dispatch = useDispatch();
 
   const findTotalTeam = (fplTeam: FPLTeam) => {
@@ -20,7 +19,7 @@ export default function FplDataBoard() {
         }
         return acc;
       }, 0);
-    return total;
+    return total.toFixed(2);
   };
 
   const handleClearTeam = () => {
@@ -29,7 +28,7 @@ export default function FplDataBoard() {
 
   return (
     <div>
-      <div>{<p>Total Cost: {findTotalTeam(fplTeam)}M</p>}</div>
+      <div>{<p>Total Cost: {findTotalTeam(fplTeam)}m</p>}</div>
       <div>
         <button onClick={handleClearTeam}>Clear Team</button>
       </div>

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { Scatter } from "react-chartjs-2";
 import {
@@ -10,11 +9,10 @@ import {
   Legend,
 } from "chart.js";
 import { Player } from "@/redux/features/playersSlice";
-
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { availableFields } from "../constants/columns";
-import Select from "react-select";
+import PlayerCard from "./playerCard";
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
@@ -23,7 +21,6 @@ const FplDataGraph = () => {
   const fplTeam = useSelector((state: RootState) => state.fplTeam);
   const [xAxisField, setXAxisField] = useState("minutes");
   const [yAxisField, setYAxisField] = useState("total_points");
-  const [filteredMetric, setFilteredMetric] = useState("total_points");
 
   const [playerFiltered, setPlayerFiltered] = useState([]);
 
@@ -44,8 +41,28 @@ const FplDataGraph = () => {
   const [searchedAndFilteredPlayers, setSearchAndFilteredPlayers] = useState<
     Player[]
   >([]);
-
   const [fplPlayerPosition, setFplPlayerPosition] = useState(Number(5));
+
+  const [hoveredPlayer, setHoveredPlayer] = useState(null);
+
+  const handlePointClick = (event, elements) => {
+    if (!elements.length) return; // If no point is clicked, do nothing
+    const datasetIndex = elements[0].datasetIndex; // Dataset index of clicked point
+    const dataIndex = elements[0].index; // Index of the data point in the dataset
+
+    const clickedDataPoint = data.datasets[datasetIndex].data[dataIndex]; // Access the clicked point's data
+    console.log(clickedDataPoint);
+
+    setSelectedPlayers((prev) => {
+      const player = players.find((p) => p.id === clickedDataPoint.id);
+
+      if (player && !prev.some((p) => p.id === player.id)) {
+        return [...prev, player]; // Add player only if not already selected
+      }
+
+      return prev; // Do nothing if player is already selected
+    }); // Update the state with player info
+  };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
@@ -81,17 +98,6 @@ const FplDataGraph = () => {
 
     setSearchAndFilteredPlayers(searchedPlayerFilter);
   }, [selectedPlayers, searchedPlayerPosition]);
-
-  // useEffect(() => {
-  //   const positionFiltered =
-  //     searchedPlayerPosition === 5
-  //       ? selectedPlayers
-  //       : selectedPlayers.filter(
-  //           (player) => player.element_type === searchedPlayerPosition
-  //         );
-
-  //   setSelectedPlayers(positionFiltered);
-  // }, [selectedPlayers, searchedPlayerPosition]);
 
   const handleAmountOfPlayers = (e) => {
     setPlayerAmountMetric(Number(e.target.value));
@@ -129,10 +135,6 @@ const FplDataGraph = () => {
     players,
   ]);
 
-  // const filteredPlayers = selectedPlayerIds.length
-  //   ? players.filter((player) => selectedPlayerIds.includes(player.id))
-  //   : playerFiltered;
-
   useEffect(() => {
     const playersArray = Object.values(fplTeam).filter(
       (player): player is Player => player != null
@@ -159,11 +161,6 @@ const FplDataGraph = () => {
     };
   };
 
-  console.log(fplTeam);
-
-  // const yAxisData = filteredPlayers.map((player) => player[xAxisField]);
-  // const xAxisData = filteredPlayers.map((player) => player[yAxisField]);
-
   const xAxisRange = calculateAxisRange(players, xAxisField);
   const yAxisRange = calculateAxisRange(players, yAxisField);
 
@@ -175,6 +172,7 @@ const FplDataGraph = () => {
           x: player[xAxisField],
           y: player[yAxisField],
           name: player.web_name,
+          id: player.id,
           playerStat: player[playerSearchMetric] || "0",
           xName: availableFields.find((field) => field.value === xAxisField)
             ?.label,
@@ -189,6 +187,7 @@ const FplDataGraph = () => {
           x: player[xAxisField],
           y: player[yAxisField],
           name: player.web_name,
+          id: player.id,
           playerStat: player[playerSearchMetric] || "N/A",
           xName: availableFields.find((field) => field.value === xAxisField)
             ?.label,
@@ -203,6 +202,7 @@ const FplDataGraph = () => {
           x: player[xAxisField],
           y: player[yAxisField],
           name: player.web_name,
+          id: player.id,
           playerStat: player[playerSearchMetric] || "N/A",
           xName: availableFields.find((field) => field.value === xAxisField)
             ?.label,
@@ -214,8 +214,6 @@ const FplDataGraph = () => {
     ],
   };
 
-  // console.log(fplTeam);
-
   const options = {
     responsive: true,
     plugins: {
@@ -223,11 +221,12 @@ const FplDataGraph = () => {
       tooltip: {
         callbacks: {
           label: (context) => {
-            const { x, y, name, playerStat } = context.raw as {
+            const { x, y, name, playerStat, id } = context.raw as {
               x: number;
               y: number;
               name: string;
               playerStat: number | string;
+              id: number;
             };
             const searchedCatA =
               playerAmountMetric <= 201
@@ -249,6 +248,7 @@ const FplDataGraph = () => {
         },
       },
     },
+    onClick: handlePointClick,
     scales: {
       x: {
         title: {
@@ -437,10 +437,12 @@ const FplDataGraph = () => {
           <option value={4}>Forward</option>
         </select>
       </div>
-      {/* Render the scatter chart */}
       <div style={{ width: "1500px", height: "900px" }}>
         <Scatter data={data} options={options} />
       </div>
+      {searchedAndFilteredPlayers.length >= 1 && (
+        <PlayerCard players={searchedAndFilteredPlayers} />
+      )}
     </div>
   );
 };

@@ -41,4 +41,5 @@ export const availableFields = [
   { value: "selected_by_percent", label: "Selected by Percent" },
   { value: "form", label: "Form" },
   { value: "clean_sheets_per_90", label: "Clean Sheet per 90" },
+  { value: "goals_and_assists", label: "G/A" },
 ];
