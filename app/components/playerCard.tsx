@@ -16,19 +16,19 @@ export default function PlayerCard({ players }: PlayerCardProps) {
     setPlayerCardData(players);
   }, [players]);
 
-  const fetchFixtures = async (id: Number) => {
-    try {
-      const response = await fetch(
-        `https://fantasy.premierleague.com/api/element-summary/${id}`
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log("error with fixture fetch", error);
-    }
-  };
+  // const fetchFixtures = async (id: Number) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://fantasy.premierleague.com/api/element-summary/${id}`
+  //     );
+  //     const data = await response.json();
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log("error with fixture fetch", error);
+  //   }
+  // };
 
-  fetchFixtures(327);
+  // fetchFixtures(327);
 
   return (
     <div>
